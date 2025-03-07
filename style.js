@@ -44,4 +44,11 @@ export default StyleSheet.create({
     textAlign: 'center',
     alignSelf: 'center',
   },
+  bar1: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    color: 'white',
+    alignSelf: 'flex-start',
+    marginVertical:15,
+  },
 });
