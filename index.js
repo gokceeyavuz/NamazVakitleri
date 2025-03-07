@@ -1,34 +1,55 @@
-const pisa = require('./pisa.jpeg');
-const roma = require('./roma.jpeg');
-const portofino = require('./portofino.jpeg');
-const verona = require('./verona.jpeg');
-const milano = require('./milano.jpeg');
-const fontanaRoma = require('./fontanaRoma.jpeg');
-const linkedin = require('./linkedin.jpg');
-const ruj = require('./ruj.jpeg');
-const serum = require('./serum.jpeg');
-const serum2 = require('./serum2.jpeg');
-const namaz = require('./namaz.jpg');
-const bisiklet2 = require('./bisiklet2.jpeg');
-const linkedinn = require('./linkedinn.jpeg');
-const ekranFotolinkedin = require('./ekranFotolinkedin.jpeg');
-const ortakoy = require('./ortakoy.jpg');
-const istanbul = require('./istanbul.jpg');
-export default {
-  pisa,
-  roma,
-  portofino,
-  verona,
-  milano,
-  fontanaRoma,
-  linkedin,
-  serum,
-  ruj,
-  serum2,
-  namaz,
-  bisiklet2,
-  linkedinn,
-  ekranFotolinkedin,
-  ortakoy,
-  istanbul,
+import {Image, ImageBackground, StyleSheet, Text, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
+import style from './style';
+import images from '../../assets/images';
+
+const index = () => {
+  const [prayerTimes, setPrayerTimes] = useState(null);
+  const [loading, setLoading] = useState(true); // Yükleme durumunu kontrol et
+
+  useEffect(() => {
+    fetch(
+      'https://api.aladhan.com/v1/timingsByCity?city=Istanbul&country=Turkey&method=2',
+    )
+      .then(response => response.json())
+      .then(data => {
+        setPrayerTimes(data.data.timings);
+        setLoading(false); // Veri geldi, yükleme bitti
+      })
+      .catch(error => {
+        console.log('API Hatası:', error);
+        setLoading(false); // Hata olursa da yüklemeyi bitir
+      });
+  }, []);
+
+  return (
+    <SafeAreaView>
+      <View style={style.container}>
+        <Image style={style.background} source={images.istanbul}></Image>
+      </View>
+      <View style={style.alan1}>
+        <Text style={style.alan1Text}> Vakit Bul</Text>
+      </View>
+      <View style={style.alan2}>
+        <Text style={style.bar}> İstanbul Namaz vakitleri</Text>
+        <Text style={style.alan1Text}>Yükleniyor...</Text>
+        {prayerTimes && prayerTimes.Fajr ? (
+          <>
+            <Text style={style.bar1}>Sabah: {prayerTimes.Fajr}</Text>
+            <Text style={style.bar1}>Öğle: {prayerTimes.Dhuhr}</Text>
+            <Text style={style.bar1}>İkindi: {prayerTimes.Asr}</Text>
+            <Text style={style.bar1}>Akşam: {prayerTimes.Maghrib}</Text>
+            <Text style={style.bar1}>Yatsı: {prayerTimes.Isha}</Text>
+          </>
+        ) : (
+          <Text style={style.alan1Text}>Veri Yüklenemedi</Text>
+        )}
+      </View>
+    </SafeAreaView>
+  );
 };
+
+export default index;
+
+const styles = StyleSheet.create({});
