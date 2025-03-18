@@ -1,55 +1,32 @@
-import {Image, ImageBackground, StyleSheet, Text, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
-import style from './style';
-import images from '../../assets/images';
-
-const index = () => {
-  const [prayerTimes, setPrayerTimes] = useState(null);
-  const [loading, setLoading] = useState(true); // Yükleme durumunu kontrol et
-
-  useEffect(() => {
-    fetch(
-      'https://api.aladhan.com/v1/timingsByCity?city=Istanbul&country=Turkey&method=2',
-    )
-      .then(response => response.json())
-      .then(data => {
-        setPrayerTimes(data.data.timings);
-        setLoading(false); // Veri geldi, yükleme bitti
-      })
-      .catch(error => {
-        console.log('API Hatası:', error);
-        setLoading(false); // Hata olursa da yüklemeyi bitir
-      });
-  }, []);
-
-  return (
-    <SafeAreaView>
-      <View style={style.container}>
-        <Image style={style.background} source={images.istanbul}></Image>
-      </View>
-      <View style={style.alan1}>
-        <Text style={style.alan1Text}> Vakit Bul</Text>
-      </View>
-      <View style={style.alan2}>
-        <Text style={style.bar}> İstanbul Namaz vakitleri</Text>
-        <Text style={style.alan1Text}>Yükleniyor...</Text>
-        {prayerTimes && prayerTimes.Fajr ? (
-          <>
-            <Text style={style.bar1}>Sabah: {prayerTimes.Fajr}</Text>
-            <Text style={style.bar1}>Öğle: {prayerTimes.Dhuhr}</Text>
-            <Text style={style.bar1}>İkindi: {prayerTimes.Asr}</Text>
-            <Text style={style.bar1}>Akşam: {prayerTimes.Maghrib}</Text>
-            <Text style={style.bar1}>Yatsı: {prayerTimes.Isha}</Text>
-          </>
-        ) : (
-          <Text style={style.alan1Text}>Veri Yüklenemedi</Text>
-        )}
-      </View>
-    </SafeAreaView>
-  );
+import Travel1 from './travel1';
+import Travel2 from './travel2';
+import Travel3 from './travel3';
+import TuruncuBisiklet from './turuncubisiklet';
+import TuruncuBisiklet2 from './turuncuBisiklet2';
+import TuruncuBisiklet3 from './turuncuBisiklet3';
+import AppMor1 from './appMor1';
+import AppMor2 from './appMor2';
+import AppMor3 from './appMor3';
+import FitnessClub from './FitnessClubb';
+import FitnessClub2 from './fitnessClub2';
+import FitnessClub3 from './fitnessClub3';
+import Yayla1 from './yayla1';
+import Yayla2 from './yayla2';
+import Yayla3 from './yayla3';
+export {
+  Travel1,
+  Travel2,
+  Travel3,
+  TuruncuBisiklet,
+  TuruncuBisiklet2,
+  TuruncuBisiklet3,
+  AppMor1,
+  AppMor2,
+  AppMor3,
+  FitnessClub,
+  FitnessClub2,
+  FitnessClub3,
+  Yayla1,
+  Yayla2,
+  Yayla3,
 };
-
-export default index;
-
-const styles = StyleSheet.create({});
